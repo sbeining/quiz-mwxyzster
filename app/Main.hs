@@ -3,21 +3,13 @@ module Main where
 
 import Control.Monad
 import Data.Question
-import System.Directory
-import System.Environment.Executable
-import System.FilePath
+import Paths
 import qualified Graphics.UI.Threepenny as UI
 import Graphics.UI.Threepenny.Core
 
 main :: IO ()
 main = do
-  -- search in directory of the executable first and then in the current directory
-  (execPath, _) <- splitExecutablePath
-  exists <- doesDirectoryExist (execPath </> "questions")
-  let path = if exists
-      then execPath </> "questions"
-      else "questions"
-
+  path <- getQuestionsPath
   questions <- fromFilePath path
 
   startGUI defaultConfig (setup questions)
