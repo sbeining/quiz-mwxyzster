@@ -9,14 +9,18 @@ import Graphics.UI.Threepenny.Core
 
 main :: IO ()
 main = do
+  static <- getStaticPath
   path <- getQuestionsPath
   questions <- fromFilePath path
 
-  startGUI defaultConfig (setup questions)
+  startGUI defaultConfig
+    { jsStatic = Just static
+    } $(setup questions)
 
 setup :: [Question] -> Window -> UI ()
 setup questions window = void $ do
   _ <- return window # set UI.title "Quiz Mwxyzster"
+  UI.addStyleSheet window "styles.css"
 
   -- GUI Elements
   number <- UI.input
