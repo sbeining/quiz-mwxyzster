@@ -27,13 +27,13 @@ setup questions window = void $ do
     # set value "0"
     # set (attr "type") "hidden"
   question <- UI.div
-    # set text "Click or press any key to start"
+    # set text "Click or press space to start"
 
     -- Events
   on UI.click question $ const $ nextQuestion number question
 
   body <- getBody window
-  on UI.keyup body $ const $ nextQuestion number question
+  on UI.keyup body $ \keycode -> when (keycode == space) $ void $ prevQuestion number question
 
   -- DOM
   getBody window #+
@@ -42,6 +42,9 @@ setup questions window = void $ do
     ]
 
   where
+    space :: Int
+    space = 8
+
     nextQuestion :: Element -> Element-> UI Element
     nextQuestion number outputElement = do
       nr <- get value number
