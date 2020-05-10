@@ -27,10 +27,13 @@ setup questions window = void $ do
     # set value "0"
     # set (attr "type") "hidden"
   question <- UI.div
-    # set text "Click to start"
+    # set text "Click or press any key to start"
 
     -- Events
   on UI.click question $ const $ nextQuestion number question
+
+  body <- getBody window
+  on UI.keyup body $ const $ nextQuestion number question
 
   -- DOM
   getBody window #+
