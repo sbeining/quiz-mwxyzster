@@ -30,14 +30,18 @@ setup questions window = void $ do
     # set text "Click to start"
 
     -- Events
-  on UI.click question $ const $ do
-    nr <- get value number
-    let num = read nr
-    _ <- element question # set text (questionContent $ questions!!num)
-    element number # set value (show $ num + 1)
+  on UI.click question $ const $ nextQuestion number question
 
   -- DOM
   getBody window #+
     [ element number
     , element question
     ]
+
+  where
+    nextQuestion :: Element -> Element-> UI Element
+    nextQuestion number outputElement = do
+      nr <- get value number
+      let num = read nr
+      _ <- element outputElement # set text (questionContent $ questions!!num)
+      element number # set value (show $ num + 1)
