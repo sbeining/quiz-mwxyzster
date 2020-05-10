@@ -45,6 +45,6 @@ setup questions window = void $ do
     nextQuestion :: Element -> Element-> UI Element
     nextQuestion number outputElement = do
       nr <- get value number
-      let num = read nr
-      _ <- element outputElement # set text (questionContent $ questions!!num)
-      element number # set value (show $ num + 1)
+      let num = (read nr) + 1
+      _ <- element outputElement # set text (questionContent $ questions!!(num - 1))
+      element number # set value (show num)
